@@ -1,0 +1,81 @@
+﻿@model WebApplication10.lugare
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    @*<script src="~/Scripts/employee.js"></script>*@
+    <title>La Juana Tours</title>
+
+</head>
+<body>
+    <div class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="brand" data-target=".navbar-brand">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("La Juana Tours", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar navbar-default">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("La Juana Tours", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    <li class="active">@Html.ActionLink("Tours", "Index", "tours", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Lugares Turisticos", "Index", "lugares", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Clima", "Index", "climas", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Actividades Por Hacer", "Index", "actividads", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("+ Informacion (API)", "Index", "api", new { area = "" }, null)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <h3>Estas Seguro que quieres eliminar este elemento?</h3>
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nombreestado)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Nombreestado)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Descripcionestado)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Descripcionestado)
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                    <a href="@Url.Action("Index")" class="btn btn-warning">
+                        <span><strong>Regresar</strong></span>
+                    </a>
+                    @*@Html.ActionLink("Back to List", "Index")*@
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

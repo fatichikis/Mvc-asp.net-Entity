@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="apiturisModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="actividad">
+          <Key>
+            <PropertyRef Name="IDactividad" />
+          </Key>
+          <Property Name="IDactividad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombreactividad" Type="nvarchar(max)" />
+          <Property Name="Descripcionactividad" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="clima">
+          <Key>
+            <PropertyRef Name="IDclima" />
+          </Key>
+          <Property Name="IDclima" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombreclima" Type="nvarchar(max)" />
+          <Property Name="Descripcionclima" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="lugares">
+          <Key>
+            <PropertyRef Name="IDestado" />
+          </Key>
+          <Property Name="IDestado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombreestado" Type="nvarchar(max)" />
+          <Property Name="Descripcionestado" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tours">
+          <Key>
+            <PropertyRef Name="IDtour" />
+          </Key>
+          <Property Name="IDtour" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombretour" Type="nvarchar(max)" />
+          <Property Name="Descripciontour" Type="nvarchar(max)" />
+          <Property Name="IDestado" Type="int" />
+          <Property Name="IDclima" Type="int" />
+          <Property Name="IDactividad" Type="int" />
+        </EntityType>
+        <Association Name="FK__tours__IDactivid__0EA330E9">
+          <End Role="actividad" Type="Self.actividad" Multiplicity="0..1" />
+          <End Role="tours" Type="Self.tours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="actividad">
+              <PropertyRef Name="IDactividad" />
+            </Principal>
+            <Dependent Role="tours">
+              <PropertyRef Name="IDactividad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tours__IDclima__0DAF0CB0">
+          <End Role="clima" Type="Self.clima" Multiplicity="0..1" />
+          <End Role="tours" Type="Self.tours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clima">
+              <PropertyRef Name="IDclima" />
+            </Principal>
+            <Dependent Role="tours">
+              <PropertyRef Name="IDclima" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tours__IDestado__0CBAE877">
+          <End Role="lugares" Type="Self.lugares" Multiplicity="0..1" />
+          <End Role="tours" Type="Self.tours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lugares">
+              <PropertyRef Name="IDestado" />
+            </Principal>
+            <Dependent Role="tours">
+              <PropertyRef Name="IDestado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="apiturisModelStoreContainer">
+          <EntitySet Name="actividad" EntityType="Self.actividad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="clima" EntityType="Self.clima" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lugares" EntityType="Self.lugares" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tours" EntityType="Self.tours" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tours__IDactivid__0EA330E9" Association="Self.FK__tours__IDactivid__0EA330E9">
+            <End Role="actividad" EntitySet="actividad" />
+            <End Role="tours" EntitySet="tours" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tours__IDclima__0DAF0CB0" Association="Self.FK__tours__IDclima__0DAF0CB0">
+            <End Role="clima" EntitySet="clima" />
+            <End Role="tours" EntitySet="tours" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tours__IDestado__0CBAE877" Association="Self.FK__tours__IDestado__0CBAE877">
+            <End Role="lugares" EntitySet="lugares" />
+            <End Role="tours" EntitySet="tours" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="apiturisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="actividad">
+          <Key>
+            <PropertyRef Name="IDactividad" />
+          </Key>
+          <Property Name="IDactividad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombreactividad" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcionactividad" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tours" Relationship="Self.FK__tours__IDactivid__0EA330E9" FromRole="actividad" ToRole="tours" />
+        </EntityType>
+        <EntityType Name="clima">
+          <Key>
+            <PropertyRef Name="IDclima" />
+          </Key>
+          <Property Name="IDclima" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombreclima" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcionclima" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tours" Relationship="Self.FK__tours__IDclima__0DAF0CB0" FromRole="clima" ToRole="tours" />
+        </EntityType>
+        <EntityType Name="lugare">
+          <Key>
+            <PropertyRef Name="IDestado" />
+          </Key>
+          <Property Name="IDestado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombreestado" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcionestado" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tours" Relationship="Self.FK__tours__IDestado__0CBAE877" FromRole="lugares" ToRole="tours" />
+        </EntityType>
+        <EntityType Name="tour">
+          <Key>
+            <PropertyRef Name="IDtour" />
+          </Key>
+          <Property Name="IDtour" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombretour" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Descripciontour" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IDestado" Type="Int32" />
+          <Property Name="IDclima" Type="Int32" />
+          <Property Name="IDactividad" Type="Int32" />
+          <NavigationProperty Name="actividad" Relationship="Self.FK__tours__IDactivid__0EA330E9" FromRole="tours" ToRole="actividad" />
+          <NavigationProperty Name="clima" Relationship="Self.FK__tours__IDclima__0DAF0CB0" FromRole="tours" ToRole="clima" />
+          <NavigationProperty Name="lugare" Relationship="Self.FK__tours__IDestado__0CBAE877" FromRole="tours" ToRole="lugares" />
+        </EntityType>
+        <Association Name="FK__tours__IDactivid__0EA330E9">
+          <End Role="actividad" Type="Self.actividad" Multiplicity="0..1" />
+          <End Role="tours" Type="Self.tour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="actividad">
+              <PropertyRef Name="IDactividad" />
+            </Principal>
+            <Dependent Role="tours">
+              <PropertyRef Name="IDactividad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tours__IDclima__0DAF0CB0">
+          <End Role="clima" Type="Self.clima" Multiplicity="0..1" />
+          <End Role="tours" Type="Self.tour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clima">
+              <PropertyRef Name="IDclima" />
+            </Principal>
+            <Dependent Role="tours">
+              <PropertyRef Name="IDclima" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tours__IDestado__0CBAE877">
+          <End Role="lugares" Type="Self.lugare" Multiplicity="0..1" />
+          <End Role="tours" Type="Self.tour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lugares">
+              <PropertyRef Name="IDestado" />
+            </Principal>
+            <Dependent Role="tours">
+              <PropertyRef Name="IDestado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="apiturisEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="actividads" EntityType="Self.actividad" />
+          <EntitySet Name="climas" EntityType="Self.clima" />
+          <EntitySet Name="lugares" EntityType="Self.lugare" />
+          <EntitySet Name="tours" EntityType="Self.tour" />
+          <AssociationSet Name="FK__tours__IDactivid__0EA330E9" Association="Self.FK__tours__IDactivid__0EA330E9">
+            <End Role="actividad" EntitySet="actividads" />
+            <End Role="tours" EntitySet="tours" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tours__IDclima__0DAF0CB0" Association="Self.FK__tours__IDclima__0DAF0CB0">
+            <End Role="clima" EntitySet="climas" />
+            <End Role="tours" EntitySet="tours" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tours__IDestado__0CBAE877" Association="Self.FK__tours__IDestado__0CBAE877">
+            <End Role="lugares" EntitySet="lugares" />
+            <End Role="tours" EntitySet="tours" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="apiturisModelStoreContainer" CdmEntityContainer="apiturisEntities">
+          <EntitySetMapping Name="actividads">
+            <EntityTypeMapping TypeName="apiturisModel.actividad">
+              <MappingFragment StoreEntitySet="actividad">
+                <ScalarProperty Name="IDactividad" ColumnName="IDactividad" />
+                <ScalarProperty Name="Nombreactividad" ColumnName="Nombreactividad" />
+                <ScalarProperty Name="Descripcionactividad" ColumnName="Descripcionactividad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="climas">
+            <EntityTypeMapping TypeName="apiturisModel.clima">
+              <MappingFragment StoreEntitySet="clima">
+                <ScalarProperty Name="IDclima" ColumnName="IDclima" />
+                <ScalarProperty Name="Nombreclima" ColumnName="Nombreclima" />
+                <ScalarProperty Name="Descripcionclima" ColumnName="Descripcionclima" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lugares">
+            <EntityTypeMapping TypeName="apiturisModel.lugare">
+              <MappingFragment StoreEntitySet="lugares">
+                <ScalarProperty Name="IDestado" ColumnName="IDestado" />
+                <ScalarProperty Name="Nombreestado" ColumnName="Nombreestado" />
+                <ScalarProperty Name="Descripcionestado" ColumnName="Descripcionestado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tours">
+            <EntityTypeMapping TypeName="apiturisModel.tour">
+              <MappingFragment StoreEntitySet="tours">
+                <ScalarProperty Name="IDtour" ColumnName="IDtour" />
+                <ScalarProperty Name="Nombretour" ColumnName="Nombretour" />
+                <ScalarProperty Name="Descripciontour" ColumnName="Descripciontour" />
+                <ScalarProperty Name="IDestado" ColumnName="IDestado" />
+                <ScalarProperty Name="IDclima" ColumnName="IDclima" />
+                <ScalarProperty Name="IDactividad" ColumnName="IDactividad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

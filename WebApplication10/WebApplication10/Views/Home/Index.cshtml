@@ -1,0 +1,266 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    @*<script src="~/Scripts/employee.js"></script>*@
+    <title>La Juana Tours</title>
+
+</head>
+<body>
+    <div class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="brand" data-target=".navbar-brand">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("La Juana Tours", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar navbar-default">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("La Juana Tours", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    <li class="active">@Html.ActionLink("Tours", "Index", "tours", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Lugares Turisticos", "Index", "lugares", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Clima", "Index", "climas", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Actividades Por Hacer", "Index", "actividads", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("+ Informacion (API)", "Index", "api", new { area = "" }, null)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2 class="headline first-child text-color"><span class="border-color">Revisa el Clima por Región</span></h2>
+            </div>
+        </div> <!-- / .row -->
+    </div> <!-- / .container -->
+
+    <div class="color-jumbotron jumbotron-green">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form class="form-inline text-center first-child"  method=GET action="https://openweathermap.org/find?q=" target="_blank">
+                        <div class="form-group">
+                            <label class="sr-only" for="help-search">Search</label>
+                            <input class="form-control border-color col-sm-12"  placeholder="Search" type="text" id="searchform" name="q">
+                        </div>
+                        <button type="submit" class="btn btn-color"><i class="fa fa-question-circle"></i> Search</button>
+                    </form><p></p>
+                </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .container -->
+    </div> <!-- / .color-jumbotron -->
+
+    <div id='pbar' class="progress progress-striped active" style="visibility: none">
+        <div class="bar" style="width: 100%;"></div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="tab-pane active" id="forecast-list">
+                    <div id="forecast_list_ul"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="tab-pane active" id="forecast-list">
+                    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+                    <link rel="stylesheet" href="css/weather.css">
+                        <div class="container-fluid all">
+                            <div class="row well">
+                                <div class="col-md-12 " id="city">
+                                    <h2 class="text-center">El clima en tu ciudad es de:</h2>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 " id="weather">
+                                        <img src="" id="weatherImg" class="center-block">
+                                        <h3 class="text-center data-item" id="weather-text"></h3>
+                                    </div>
+                                    <div class="col-md-4 " id="temp">
+                                        <h3 class="text-center">La Temperatura es:</h3>
+                                            <h3 class="text-center data-item" id="temp-text"></h3>
+                                            <div class="checkbox text-center">
+                                                <label>
+                                                    <input type="checkbox" id="tempMode" value="2">
+                                                    C&deg
+                                                </label>
+                                            </div>
+</div>
+                                    <div class="col-md-4 " id="wind">
+                                        <h3 class="text-center">Wind Speed</h3>
+                                        <h3 class="text-center data-item" id="wind-text"></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+                <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+                <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+                <script type="text/javascript">
+        var tempMode = 1;
+        function getWeather(lat, lon) {
+        var apiURI = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=06170c100199dbae1e223cc3dfad960b";
+
+        $.ajax({
+        url: apiURI,
+        dataType: "json",
+        type: "GET",
+        async: "false",
+        success: function(resp) {
+
+        $("#tempMode").on("click", function() {
+        if (this.checked) {
+        $("#temp-text").html(cels.toFixed(1) + " C&deg");
+        console.log("checked");
+        } else
+        $("#temp-text").html(fahr.toFixed(0) + " F&deg");
+        });
+        console.log(apiURI);
+        console.log(resp.name);
+        if (resp.name) {
+        $("#city-text").html(resp.name + ", " + resp.sys.country);
+        }
+        if (resp.wind) {
+        var knots = resp.wind.speed * 1.9438445;
+        $("#wind-text").html(knots.toFixed(1) + " Knots");
+        }
+        if (resp.main.temp) {
+        var fahr = (resp.main.temp * 9 / 5) - 459.67;
+        var cels = (resp.main.temp - 273.15);
+        if (cels > 24){
+        $("#temp-text").css("color", "red");
+        } else if (cels < 18){
+        $("#temp-text").css("color", "blue");
+        }
+        $("#temp-text").html((tempMode === 1 ? fahr.toFixed(0) + " F&deg" : cels.toFixed(0) + " C&deg"));
+        }
+        if (resp.weather) {
+        var imgURL = "http://openweathermap.org/img/w/" + resp.weather[0].icon + ".png";
+        console.log(imgURL)
+        $("#weatherImg").attr("src", imgURL);
+        $("#weather-text").html(resp.weather[0].description);
+        }
+        },
+        error: function(resp) {
+        alert("Error: " + e);
+        clearInterval(updateinter);
+        }
+        });
+        }
+
+        function getLocation() {
+        if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+        getWeather(position.coords.latitude, position.coords.longitude);
+        })
+        } else {
+        alert("geolocation not available" + e);
+        clearInterval(updateinter);
+        }
+        }
+        var i = 0;
+        var updateinter = setInterval(function(){
+        console.log("iteration# " + i++);
+        if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+        getWeather(position.coords.latitude, position.coords.longitude);
+        })
+        } else {
+        alert("geolocation not available" + e);
+        }
+        }, 300000);
+
+
+        getLocation();
+                </script>
+                </div>
+            </div>
+        </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <h3>Bienvenidos a La Juana Tours:</h3>
+                <ul>
+                    <li>
+                        Revisa los tours que recomendamos, actividades que puedes hacer en cada lugar, ubicalos desde google maps -
+                    </li>
+                    <li>
+                        Conoce el clima por region, anexa tours que recomiendes, y dejanos tus sugerencias el menu de navegacion esta en la parte de arriba
+                    </li>
+                </ul>
+            </div>
+            <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+            <center>
+                <div id="player"></div>
+
+                <script>
+                    // 2. This code loads the IFrame Player API code asynchronously.
+                    var tag = document.createElement('script');
+
+                    tag.src = "https://www.youtube.com/iframe_api";
+                    var firstScriptTag = document.getElementsByTagName('script')[0];
+                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                    // 3. This function creates an <iframe> (and YouTube player)
+                    //    after the API code downloads.
+                    var player;
+                    function onYouTubeIframeAPIReady() {
+                        player = new YT.Player('player', {
+                            height: '360',
+                            width: '840',
+                            videoId: 'YqyYenoVADU',
+                            events: {
+                                'onReady': onPlayerReady,
+                                'onStateChange': onPlayerStateChange
+                            }
+                        });
+                    }
+
+                    // 4. The API will call this function when the video player is ready.
+                    function onPlayerReady(event) {
+                        event.target.playVideo();
+                    }
+
+                    // 5. The API calls this function when the player's state changes.
+                    //    The function indicates that when playing a video (state=1),
+                    //    the player should play for six seconds and then stop.
+                    var done = false;
+                    function onPlayerStateChange(event) {
+                        if (event.data == YT.PlayerState.PLAYING && !done) {
+                            setTimeout(stopVideo, 9000);
+                            done = true;
+                        }
+                    }
+                    function stopVideo() {
+                        player.stopVideo();
+                    }
+                </script>
+            </center>
+
+        </div>
+    </div>
+
+    </body>
+</html>
